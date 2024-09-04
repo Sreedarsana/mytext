@@ -1,0 +1,288 @@
+--DDL
+
+CREATE TABLE Student
+(
+Stud_id int,
+Stud_name char(20),
+total_mark number(5,2)
+)
+
+--ALTER
+--changing the datatype
+alter table Student MODIFY Stud_name varchar(20)
+
+
+--describe table structure
+desc Student
+
+--adding new column
+alter table Student ADD contact_no varchar(10)
+
+--changing length
+alter table Student MODIFY Stud_name varchar(30)
+
+--rename a column
+alter table Student RENAME COLUMN contact_no TO phone_no
+
+
+--To delete a column
+alter table Student DROP COLUMN phone_no
+
+--Rename a table
+
+alter table Student Rename  To Student1
+
+desc Student1
+
+--To delete all the records --truncate
+
+TRUNCATE table Student1
+
+--To delete the entire table
+
+DROP TABLE Student1
+
+--Constraints
+
+-- without primary key
+
+create table department
+(
+dept_id INT,
+dept_name varchar(20)
+)
+
+--inserting values
+insert into Department(dept_id,dept_name)
+values(1, 'HR')
+insert into Department(dept_id,dept_name)
+values(2,'IT')
+insert into Department(dept_id,dept_name)
+values(1, 'HR')
+insert into Department(dept_id,dept_name)
+values(3,'Finance')
+
+select * from Department
+
+--Checking primary key constraint
+
+DROP table Department
+create table department
+(
+dept_id INT primary key,
+dept_name varchar(20)
+)
+
+desc Department
+--inserting values
+insert into Department(dept_id,dept_name)
+values(1, 'HR')
+insert into Department(dept_id,dept_name)
+values(2,'IT')
+insert into Department(dept_id,dept_name)
+values(1, 'HR')
+insert into Department(dept_id,dept_name)
+values(3,'Finance')
+
+select * from Department
+
+--
+DROP TABLE EMPLOYEE
+create table employee(
+emp_id INT PRIMARY KEY,
+emp_name varchar(20),
+salary NUMBER(8,2)
+
+)
+
+
+desc employee
+
+-- adding a foreign key by altering the table
+
+ALTER TABLE employee
+ADD CONSTRAINT fk_dept_id
+FOREIGN KEY(department_id)
+REFERENCES Department(dept_id)
+
+--setting foreign key at the time of creation
+
+drop table employee
+
+CREATE TABLE employee(
+emp_id INT PRIMARY KEY,
+emp_name varchar(20),
+salary NUMBER(8,2),
+department_id INT,
+CONSTRAINT fk_dept_id
+FOREIGN KEY(department_id)
+REFERENCES Department(dept_id)
+)
+insert into employee(emp_id,emp_name,salary,department_id)
+values(102,'anu',4000,2)
+insert into employee(emp_id,emp_name,salary,department_id)
+values(103,'sree',5000,3)
+
+desc employee
+
+select * from employee
+
+
+
+create table department
+(
+dept_id INT,
+dept_name varchar(20)
+)
+
+--inserting values
+insert into Department(dept_id,dept_name)
+values(1, 'HR')
+insert into Department(dept_id,dept_name)
+values(2,'IT')
+insert into Department(dept_id,dept_name)
+values(1, 'HR')
+insert into Department(dept_id,dept_name)
+values(3,'Finance')
+
+select * from Department
+
+--Checking primary key constraint
+
+DROP table Department
+create table department
+(
+dept_id INT primary key,
+dept_name varchar(20)
+)
+
+desc Department
+--inserting values
+insert into Department(dept_id,dept_name)
+values(1, 'HR')
+insert into Department(dept_id,dept_name)
+values(2,'IT')
+insert into Department(dept_id,dept_name)
+values(1, 'HR')
+insert into Department(dept_id,dept_name)
+values(3,'Finance')
+
+select * from Department
+
+--
+DROP TABLE EMPLOYEE
+create table employee(
+emp_id INT PRIMARY KEY,
+emp_name varchar(20),
+salary NUMBER(8,2)
+
+)
+
+
+desc employee
+
+-- adding a foreign key by altering the table
+
+ALTER TABLE employee
+ADD CONSTRAINT fk_dept_id
+FOREIGN KEY(department_id)
+REFERENCES Department(dept_id)
+
+--setting foreign key at the time of creation
+
+drop table employee
+
+CREATE TABLE employee(
+emp_id INT PRIMARY KEY,
+emp_name varchar(20),
+salary NUMBER(8,2),
+department_id INT,
+CONSTRAINT fk_dept_id
+FOREIGN KEY(department_id)
+REFERENCES Department(dept_id)
+)
+insert into employee(emp_id,emp_name,salary,department_id)
+values(102,'binu',4000,2)
+insert into employee(emp_id,emp_name,salary,department_id)
+values(103,'sree',5000,3)
+
+desc employee
+
+select * from employee
+
+truncate table employee
+
+
+--inserting multiple rows together 
+
+INSERT ALL
+ into employee(emp_id,emp_name,salary,department_id)
+values(101,'anu',10000,1)
+
+ into employee(emp_id,emp_name,salary,department_id)
+values(103,'Venu',5000,2)
+
+
+into employee(emp_id,emp_name,salary,department_id)
+values(104,'Abhi',6000,1)
+
+into employee(emp_id,emp_name,salary,department_id)
+values(105,'Venu',30000,2)
+select * from dual -- dummy table having one row and one column
+
+--Update
+
+UPDATE employee SET salary = 50000  WHERE emp_id =102
+UPDATE employee SET salary = 20000  WHERE emp_name ='anu'
+
+--Delete
+
+DELETE FROM employee WHERE emp_id = 103
+d = 102
+
+INSERT ALL
+ into employee(emp_id,emp_name,salary,department_id)
+values(101,'anu',10000,1)
+
+ into employee(emp_id,emp_name,salary,department_id)
+values(103,'Venu',5000,2)
+
+
+into employee(emp_id,emp_name,salary,department_id)
+values(104,'Abhi',6000,1)
+
+into employee(emp_id,emp_name,salary,department_id)
+values(105,'Venu',30000,2)
+select * from dual 
+
+select * from employee
+
+
+truncate table employee
+
+select emp_name,salary from employee
+
+--where
+
+select emp_name,salary from employee where salary <10000
+
+--Distinct
+
+select distinct emp_name from employee
+
+CREATE TABLE Department1(
+Department_id INT,
+Department_name char(20),
+Rating INT
+)
+
+
+alter table Department1 modify  Department_name varchar(20)
+alter table Department1 modify  Department_name varchar(50)
+alter table Department1 adddrop table DepartmentMaster contact_no INT
+alter table Department1 add location varchar(20)
+alter table Department1 rename column location to address
+
+alter table Department1 drop column contact_no
+alter table Department1 rename to DepartmentMaster
+truncate table DepartmentMaster
