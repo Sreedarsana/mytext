@@ -1,0 +1,112 @@
+CREATE TABLE Vehicle (
+    vehicle_id number PRIMARY KEY,
+    category_id number NOT NULL,        
+    classification_id number NOT NULL,  
+    fuel_type_id number NOT NULL,
+    make_id number NOT NULL,
+    car_name VARCHAR(100) NOT NULL,
+    color VARCHAR(50),                   
+    model VARCHAR(50),
+    reg_no VARCHAR(20) UNIQUE NOT NULL,       
+    rent_per_km DECIMAL(10, 2) NOT NULL,  
+    FOREIGN KEY (category_id) REFERENCES VehicleCategories(category_id),
+    FOREIGN KEY (classification_id) REFERENCES VehicleClassifications(classification_id),
+    FOREIGN KEY (fuel_type_id) REFERENCES FuelTypes(fuel_type_id),
+    FOREIGN KEY (make_id) REFERENCES make_info(make_id)
+);
+
+INSERT INTO Vehicle (vehicle_id,category_id, classification_id, fuel_type_id,make_id, car_name, color, model, reg_no,rent_per_km)VALUES(2,2,2,122,132,'Toyota Crysta', 'Teal blue',  '2019','KL-01-A-1234',25)
+ INSERT INTO Vehicle (vehicle_id,category_id, classification_id, fuel_type_id,make_id, car_name, color, model, reg_no,rent_per_km)VALUES(2,2,2,122,132,'Toyota Crysta', 'White', '2021', 'KL-02-B-5678', 20)
+INSERT INTO Vehicle (vehicle_id,category_id, classification_id, fuel_type_id,make_id, car_name, color, model, reg_no,rent_per_km)VALUES(3,1,2,121,132,'Mahindra Thar', 'Dark blue', '2022', 'KL-03-C-2345',30)
+INSERT INTO Vehicle (vehicle_id,category_id, classification_id, fuel_type_id,make_id, car_name, color, model, reg_no,rent_per_km)VALUES(4,3,1,122,133, 'Renault Triber', 'Silver', '2021', 'KL-04-D-6789',  18)
+INSERT INTO Vehicle (vehicle_id,category_id, classification_id, fuel_type_id,make_id, car_name, color, model, reg_no,rent_per_km)VALUES(5,5,1,121,131,  'Mercedes Benz', 'Black', '2023', 'KL-05-E-9101',  50)
+
+INSERT INTO Vehicle (vehicle_id,category_id, classification_id, fuel_type_id,make_id, car_name, color, model, reg_no,rent_per_km)VALUES
+
+
+INSERT INTO Vehicle (vehicle_id,category_id, classification_id, fuel_type_id,make_id, car_name, color, model, reg_no,rent_per_km)VALUES(6,5,2,121,131, 'BMW 7 Series', 'Blue', '2022', 'KL-06-F-1213', 45)
+
+
+INSERT INTO Vehicle (vehicle_id,category_id, classification_id, fuel_type_id,make_id, car_name, color, model, reg_no,rent_per_km)VALUES(7,1,1,122,132, 'Honda CR-V', 'Red', NULL, 'KL-07-G-3141', 22)
+
+
+INSERT INTO Vehicle (vehicle_id,category_id, classification_id, fuel_type_id,make_id, car_name, color, model, reg_no,rent_per_km)VALUES(8,2,2,122,132,'Land Rover Discovery', 'Green',  '2018', 'KL-08-H-5161',  28)
+
+
+INSERT INTO Vehicle (vehicle_id,category_id, classification_id, fuel_type_id,make_id, car_name, color, model, reg_no,rent_per_km)VALUES(9,3,2,121,133,'Maruti Suzuki Ertiga', 'Red', '2017', 'KL-09-I-7181',  15)
+
+
+INSERT INTO Vehicle (vehicle_id,category_id, classification_id, fuel_type_id,make_id, car_name, color, model, reg_no,rent_per_km)VALUES(10,5,1,121,131 ,'Porsche Panamera', 'White',  '2022', 'KL-10-J-9202', 55)
+
+
+CREATE TABLE Trips (
+    trip_id SERIAL PRIMARY KEY,
+    vehicle_id INT NOT NULL,
+    trip_distance DECIMAL(10, 2) NOT NULL,  -- Distance of the trip in kilometers
+    trip_rent_amount DECIMAL(10, 2) NOT NULL, -- Rent amount for the trip
+    FOREIGN KEY (vehicle_id) REFERENCES Vehicles(vehicle_id)
+);
+
+
+----QN 1------
+SELECT car_name
+FROM Vehicle
+WHERE category_id = 1 AND make_id=131;
+
+-----QN 2-------
+
+select car_name,category_id FROM Vehicle where reg_no like 'KL%'
+
+
+
+------QN3------------
+WITH DistanceSummary AS (
+    SELECT 
+        vehicle_id,
+        SUM(trip_distance) AS total_distance
+    FROM 
+        Trips_travelled
+    GROUP BY 
+        vehicle_id
+)
+SELECT 
+    v.car_name,
+    v.model,
+    v.rent_per_km AS rent_per_km,
+    (v.rent_per_km * ds.total_distance * 30) AS "30_day_rent"
+FROM 
+    Vehicles v
+LEFT JOIN 
+    DistanceSummary ds ON v.vehicle_id = ds.vehicle_id
+WHERE 
+    v.rent_per_km < 3000
+ORDER BY 
+    v.car_name;
+
+-------QN 4-----------
+SELECT category_id, MAX(rent_per_km) AS max_rent
+FROM Vehicle
+WHERE classification_id = 1
+GROUP BY category_id;
+
+---------QN5------------
+SELECT car_name, reg_no
+FROM Vehicle
+WHERE model IS NULL
+ORDER BY car_name DESC;
+
+
+-------QN 6-------
+SELECT car_name, reg_no
+FROM Vehicle
+WHERE color = 'Red' AND make_id = 131
+ORDER BY reg_no ASC;
+
+------QN 7----------
+SELECT car_name, category_id, rent_per_km
+FROM Vehicle
+WHERE classification_id = 1
+
+---------QN8------------
+select car_name,category_id  from Vehicles where classification_id= 2and 
+rent_rate=(select rent_rate from Vehicles where reg_no ='KL-2021')
